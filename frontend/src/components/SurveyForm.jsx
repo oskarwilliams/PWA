@@ -40,7 +40,7 @@ const SurveyForm = () => {
 
     const submitAnswers = () => {
         postAnswers(answers);
-        setAnswers(defaultAnswers);
+        setAnswers(new Map(defaultAnswers));
     };
 
     useEffect(() => {
@@ -60,7 +60,11 @@ const SurveyForm = () => {
 
     return (
         <>
-            <form className={classes.container} noValidate autoComplete="off">
+            <form
+                className={classes.container}
+                noValidate
+                autoComplete="off"
+            >
                 {questions.map(question => {
                     return (
                         <TextField

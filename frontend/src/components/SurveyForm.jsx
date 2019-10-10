@@ -41,8 +41,7 @@ const SurveyForm = () => {
     const submitAnswers = () => {
         postAnswers(answers)
             .then(() => setAnswers(new Map(defaultAnswers)))
-            // eslint-disable-next-line no-console
-            .catch(error => console.log(error));
+            .catch(error => window.alert('You are not connected to the internet, please try again when you have a connection'));
     };
 
     useEffect(() => {
@@ -77,6 +76,7 @@ const SurveyForm = () => {
                             InputProps={{ onChange: handleChange(question) }}
                             margin="normal"
                             variant="filled"
+                            fullWidth
                         />
                     );
                 })}

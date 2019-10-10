@@ -1,4 +1,4 @@
-const url = 'http://localhost:5000';
+const url = 'http://10.210.11.206:5000';
 
 export async function getQuestions () {
     return fetch(`${url}/questions`).then(data => data.json());

@@ -3,9 +3,9 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-
+app.use(express.static('../frontend/build'));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -23,6 +23,12 @@ app.get('/questions', (req, res) => {
 app.post('/answers', (req, res) => {
     console.log(req.body);
     res.send();
+});
+
+app.get('/ping', (req, res) => res.send('pong'));
+
+app.get('/', (req, res) => {
+    res.sendFile('../frontend/build/index.html');
 });
 
 app.listen(port, () => (

@@ -7,7 +7,8 @@ const PRECACHE_URLS = [
     '/static/js/runtime-main.js',
     '/static/js/2.chunk.js',
     'index.html',
-    './', // Alias for index.html
+    './',
+    '/questions',
 ];
 
 self.addEventListener('install', event => {

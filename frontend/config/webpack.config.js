@@ -138,11 +138,6 @@ module.exports = function(webpackEnv) {
     };
 
     return {
-        devServer: {
-            https: {
-                cert: fs.readFileSync('C:/Work/ProgressiveWebApp/cert.cer')
-            }
-        },
         mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
         // Stop compilation early in production
         bail: isEnvProduction,

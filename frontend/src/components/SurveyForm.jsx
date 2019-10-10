@@ -39,8 +39,10 @@ const SurveyForm = () => {
     };
 
     const submitAnswers = () => {
-        postAnswers(answers);
-        setAnswers(new Map(defaultAnswers));
+        postAnswers(answers)
+            .then(() => setAnswers(new Map(defaultAnswers)))
+            // eslint-disable-next-line no-console
+            .catch(error => console.log(error));
     };
 
     useEffect(() => {

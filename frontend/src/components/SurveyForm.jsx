@@ -1,34 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { getQuestions, postAnswers } from '../utils/apiUtils';
-import TextField from '@material-ui/core/TextField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from '@material-ui/core/Button';
-import { Paper } from '@material-ui/core';
+import { Paper, Button, Divider } from '@material-ui/core';
+import _ from 'lodash';
+import Question from './Question';
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        margin: 'auto',
+        margin: `${theme.spacing(3)}px auto`,
         width: '80%',
     },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'stretch',
     },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-    dense: {
-        marginTop: theme.spacing(2),
-    },
-    menu: {
-        width: 200,
+    question: {
+        padding: theme.spacing(3),
     },
     button: {
         margin: theme.spacing(1),
     },
-    input: {
-        display: 'none',
+    textField: {
+        width: '70%',
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+    radio: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+    checkbox: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+    select: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+    date: {
+        width: 300,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
 }));
 
@@ -38,9 +52,34 @@ const SurveyForm = () => {
     const [answers, setAnswers] = useState();
     const [defaultAnswers, setDefaultAnswers] = useState();
 
-    const handleChange = name => event => {
+    const handleChange = question => event => {
+        if (question.type === 'checkbox') {
+            return setAnswers(prevAnswers => {
+                const options = new Map(prevAnswers.get(question.name));
+                options.set(event.target.value, !options.get(event.target.value));
+                return new Map(prevAnswers.set(question.name, options));
+            });
+        }
+        if (question.type === 'date') {
+            const value = event;
+            return setAnswers(state => new Map(state.set(question.name, value)));
+        }
         const value = event.target.value;
-        setAnswers(state => new Map(state.set(name, value)));
+        return setAnswers(state => new Map(state.set(question.name, value)));
+
+    };
+
+    const createAnswerMap = (loadedQuestions) => {
+        return new Map(loadedQuestions.map(question => {
+            let value = '';
+            if (question.type === 'checkbox') {
+                value = new Map(question.options.map(option => [option, false]));
+            }
+            if (question.type === 'date') {
+                value = null;
+            }
+            return [question.name, value];
+        }));
     };
 
     const submitAnswers = () => {
@@ -52,10 +91,9 @@ const SurveyForm = () => {
     useEffect(() => {
         getQuestions()
             .then(loadedQuestions => {
-                const answerMap = new Map();
-                loadedQuestions.forEach(question => answerMap.set(question, ''));
-                setAnswers(new Map(answerMap));
-                setDefaultAnswers(new Map(answerMap));
+                const answerMap = createAnswerMap(loadedQuestions);
+                setAnswers(answerMap);
+                setDefaultAnswers(_.cloneDeep(answerMap));
                 setQuestions(loadedQuestions);
             });
     },[]);
@@ -71,21 +109,19 @@ const SurveyForm = () => {
                 noValidate
                 autoComplete="off"
             >
-                {questions.map(question => {
-                    return (
-                        <TextField
-                            key={question}
-                            label={question}
-                            className={classes.textField}
-                            value={answers.get(question)}
-                            InputProps={{ onChange: handleChange(question) }}
-                            margin="normal"
-                            variant="filled"
-                            fullWidth
-                            multiline
-                        />
-                    );
-                })}
+                {questions.map(question => (
+                    <div key={question.name}>
+                        <Divider variant="fullWidth"/>
+                        <div className={classes.question}>
+                            <Question
+                                answers={answers}
+                                classes={classes}
+                                onChange={handleChange}
+                                question={question}
+                            />
+                        </div>
+                    </div>
+                ))}
             </form>
             <Button variant="outlined" color="inherit" className={classes.button} onClick={submitAnswers}>
                 Submit

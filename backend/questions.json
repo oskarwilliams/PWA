@@ -1,0 +1,32 @@
+[{
+    "type": "text",
+    "name": "What is your name?"
+}, {
+    "type": "date",
+    "name": "Date of birth"
+}, {
+    "type": "radio",
+    "name": "How do you rate our costumer service?",
+    "options": [
+        "Best costumes I've ever seen",
+        "Meh",
+        "WTF?"
+    ]
+}, {
+    "type": "checkbox",
+    "name": "How do you eat potatoes?",
+    "options": [
+        "Boil 'em",
+        "Mash 'em",
+        "Stick 'em in a stew",
+        "Vodka"
+    ]
+}, {
+    "type": "select",
+    "name": "Gender",
+    "options": [
+        "Male",
+        "Female",
+        "Other"
+    ]
+}]

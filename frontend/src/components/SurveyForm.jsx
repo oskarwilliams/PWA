@@ -3,8 +3,13 @@ import { getQuestions, postAnswers } from '../utils/apiUtils';
 import TextField from '@material-ui/core/TextField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
+    paper: {
+        margin: 'auto',
+        width: '80%',
+    },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -60,7 +65,7 @@ const SurveyForm = () => {
     }
 
     return (
-        <>
+        <Paper className={classes.paper}>
             <form
                 className={classes.container}
                 noValidate
@@ -77,6 +82,7 @@ const SurveyForm = () => {
                             margin="normal"
                             variant="filled"
                             fullWidth
+                            multiline
                         />
                     );
                 })}
@@ -84,7 +90,7 @@ const SurveyForm = () => {
             <Button variant="outlined" color="inherit" className={classes.button} onClick={submitAnswers}>
                 Submit
             </Button>
-        </>
+        </Paper>
     );
 
 };

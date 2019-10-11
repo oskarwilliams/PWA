@@ -40,8 +40,8 @@ const SurveyForm = () => {
 
     const submitAnswers = () => {
         postAnswers(answers)
-            .then(() => setAnswers(new Map(defaultAnswers)))
-            .catch(error => window.alert('You are not connected to the internet, please try again when you have a connection'));
+            .catch(() => window.alert('You are not connected to the internet, your submission has been cached for 24 hours and will be submitted when you reconnect to the internet'))
+            .finally(() => setAnswers(new Map(defaultAnswers)));
     };
 
     useEffect(() => {

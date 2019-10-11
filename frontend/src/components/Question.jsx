@@ -31,7 +31,7 @@ const Question = ({ question, onChange, answers, classes }) => {
                                 value={option}
                                 control={<Radio color="primary" />}
                                 label={option}
-                                labelPlacement="top"
+                                labelPlacement="bottom"
                             />
                         ))}
                     </RadioGroup>

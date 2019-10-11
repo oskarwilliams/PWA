@@ -11,16 +11,13 @@ const useStyles = makeStyles(theme => ({
         width: '80%',
     },
     container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        alignItems: 'stretch',
+        width: '100%'
     },
     question: {
         padding: theme.spacing(3),
     },
     button: {
-        margin: theme.spacing(1),
+        margin: theme.spacing(3),
     },
     textField: {
         width: '70%',
@@ -105,12 +102,11 @@ const SurveyForm = () => {
     return (
         <Paper className={classes.paper}>
             <form
-                className={classes.container}
                 noValidate
                 autoComplete="off"
             >
                 {questions.map(question => (
-                    <div key={question.name}>
+                    <div key={question.name} className={classes.container}>
                         <Divider variant="fullWidth"/>
                         <div className={classes.question}>
                             <Question
@@ -123,8 +119,15 @@ const SurveyForm = () => {
                     </div>
                 ))}
             </form>
-            <Button variant="outlined" color="inherit" className={classes.button} onClick={submitAnswers}>
-                Submit
+            <Divider variant="fullWidth"/>
+            <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitAnswers}
+            >
+                SUBMIT
             </Button>
         </Paper>
     );
